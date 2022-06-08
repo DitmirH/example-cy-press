@@ -31,7 +31,7 @@ jobs:
         with:
           record: true
           parallel: true
-          config-file: cypress.json
+          config-file: cypress.config.js
           wait-on: https://www.online.easyfx.com/
           wait-on-timeout: 45
           browser: chrome
