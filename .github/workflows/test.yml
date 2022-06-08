@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        containers: [1, 2]
+        containers: [1]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -36,7 +36,7 @@ jobs:
           parallel: true
           config-file: cypress.json
           wait-on: https://www.online.easyfx.com/
-          wait-on-timeout: 30
+          wait-on-timeout: 45
           browser: chrome
           headless: true
           install: true
