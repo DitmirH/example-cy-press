@@ -1,0 +1,46 @@
+name: cypress tests example
+on:
+  pull_request:
+    types:
+      - labeled
+
+jobs:
+  cypress-run:
+    timeout-minutes: 30
+    name: Cypress run
+    runs-on: ubuntu-latest
+    container:
+      # List = https://github.com/cypress-io/cypress-docker-images/blob/master/browsers/README.md
+      image: cypress/browsers:node16.14.2-slim-chrome100-ff99-edge
+      options: --user 1001
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'ready') }}
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - id: dependencies
+        uses: ./.github/actions/dependency-cache
+
+      - name: Install deps
+        run: npm i
+
+      - name: Run tests
+        uses: cypress-io/github-action@v2
+        continue-on-error: true
+        with:
+          record: true
+          parallel: true
+          config-file: cypress.json
+          wait-on: https://www.online.easyfx.com/
+          wait-on-timeout: 30
+          browser: chrome
+          headless: true
+          install: true
+          group: Cypress run
+          config: video=true
+        env:
+          CYPRESS_RECORD_KEY: fd282e9a-b15e-4c1e-95c5-0f5c2138cf33
