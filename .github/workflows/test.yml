@@ -22,9 +22,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - id: dependencies
-        uses: ./.github/actions/dependency-cache
-
       - name: Install deps
         run: npm i
 
