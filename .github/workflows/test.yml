@@ -22,9 +22,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - id: dependencies
-        uses: ./.github/actions/dependency-cache
-
       - name: Install deps
         run: npm i
 
@@ -34,9 +31,9 @@ jobs:
         with:
           record: true
           parallel: true
-          config-file: cypress.json
+          config-file: cypress.config.js
           wait-on: https://www.online.easyfx.com/
-          wait-on-timeout: 30
+          wait-on-timeout: 45
           browser: chrome
           headless: true
           install: true
